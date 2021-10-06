@@ -8,6 +8,19 @@ const config = {
     database:'nodedb'
 };
 
+function createtable() {
+    const mysql = require('mysql')
+    const connection = mysql.createConnection(config)
+
+    const sql = `CREATE TABLE IF NOT EXISTS people (
+        id int not null primary key auto_increment,
+        name varchar(255)
+    )`
+    
+    connection.query(sql)
+    connection.end()
+}
+
 function insert(name) {
     const mysql = require('mysql')
     const connection = mysql.createConnection(config)
@@ -17,7 +30,8 @@ function insert(name) {
     connection.end()
 }
 
-app.get('/', (req,res) => {   
+app.get('/', (req,res) => {  
+    createtable(); 
     insert('Eliel Batiston');    
 
     const mysql = require('mysql')
